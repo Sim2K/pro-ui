@@ -45,7 +45,7 @@ export function Sidebar() {
     <div 
       className={cn(
         "fixed left-0 top-0 h-screen bg-white transition-all duration-300 ease-in-out z-50",
-        isCollapsed ? "w-[60px]" : "w-[250px]"
+        isCollapsed ? "w-[70px]" : "w-[250px]"
       )}
     >
       <div className="flex flex-col h-full border-r">
@@ -85,18 +85,20 @@ export function Sidebar() {
                 <Button
                   variant="ghost"
                   className={cn(
-                    "w-full justify-start",
-                    isCollapsed ? "px-2" : ""
+                    "w-full",
+                    isCollapsed ? "w-10 h-10 p-0 mx-auto flex justify-center" : "justify-start"
                   )}
                 >
-                  <item.icon className="h-4 w-4 mr-2" />
+                  <item.icon className={cn(
+                    isCollapsed ? "h-5 w-5" : "h-4 w-4 mr-2"
+                  )} />
                   {!isCollapsed && <span>{item.label}</span>}
                 </Button>
               </Link>
             ))}
 
             {!isCollapsed && (
-              <>
+              <div>
                 {showStorageNotification && (
                   <NotificationCard
                     type="storage"
@@ -109,27 +111,34 @@ export function Sidebar() {
                     onDismiss={() => setShowFeaturesNotification(false)}
                   />
                 )}
-              </>
+              </div>
             )}
           </div>
         </ScrollArea>
 
         <div className="p-4">
-          <div className="flex items-center justify-between gap-2 mb-4">
+          <div className={cn(
+            "flex gap-2 mb-4",
+            isCollapsed ? "flex-col items-center" : "items-center justify-between"
+          )}>
             <Toggle
               pressed={activeView === 'grid'}
               onPressedChange={() => setActiveView('grid')}
-              className="flex-1"
+              className={cn(
+                isCollapsed ? "w-10 h-10 p-0" : "flex-1"
+              )}
             >
-              <LayoutGrid className="h-4 w-4 mr-2" />
+              <LayoutGrid className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
               {!isCollapsed && 'Grid'}
             </Toggle>
             <Toggle
               pressed={activeView === 'list'}
               onPressedChange={() => setActiveView('list')}
-              className="flex-1"
+              className={cn(
+                isCollapsed ? "w-10 h-10 p-0" : "flex-1"
+              )}
             >
-              <LayoutList className="h-4 w-4 mr-2" />
+              <LayoutList className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
               {!isCollapsed && 'List'}
             </Toggle>
           </div>
@@ -137,11 +146,13 @@ export function Sidebar() {
           <Button
             variant="ghost"
             className={cn(
-              "w-full justify-start text-red-500 hover:text-red-600",
-              isCollapsed ? "px-2" : ""
+              "w-full text-red-500 hover:text-red-600",
+              isCollapsed ? "w-10 h-10 p-0 mx-auto flex justify-center" : "justify-start"
             )}
           >
-            <LogOut className="h-4 w-4 mr-2" />
+            <LogOut className={cn(
+              isCollapsed ? "h-5 w-5" : "h-4 w-4 mr-2"
+            )} />
             {!isCollapsed && <span>Logout</span>}
           </Button>
         </div>
